@@ -5,5 +5,25 @@
   "main": "index.js",
   "repository": "to be continue...",
   "author": "Ye",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@hot-loader/react-dom": "^17.0.1",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hot-loader": "^4.13.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-middleware": "^5.0.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-node-externals": "^3.0.0"
+  }
 }

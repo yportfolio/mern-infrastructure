@@ -2,7 +2,12 @@
   "name": "mern-infrastructure",
   "version": "1.0.0",
   "description": "Mern tech stack infrastructure for new projects.",
-  "main": "index.js",
+  "main": "template.js",
+  "scripts": {
+    "development": "nodemon",
+    "build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
+    "start": "NODE_ENV=production node ./dist/server.generated.js"
+  },
   "repository": "to be continue...",
   "author": "Ye",
   "license": "MIT",

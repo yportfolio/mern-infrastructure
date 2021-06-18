@@ -1,5 +1,5 @@
-export default ({markup, css}) => {
-    return `<!doctype html>
+export default ({ markup, css }) => {
+  return `<!doctype html>
       <html lang="en">
         <head>
           <meta charset="utf-8">
@@ -7,7 +7,7 @@ export default ({markup, css}) => {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           >
-          <title>MERN Skeleton</title>
+          <title>MERN Infra</title>
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400">
           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
           <style>
@@ -22,5 +22,5 @@ export default ({markup, css}) => {
           <style id="jss-server-side">${css}</style>
           <script type="text/javascript" src="/dist/bundle.js"></script>
         </body>
-      </html>`
-}
+      </html>`;
+};

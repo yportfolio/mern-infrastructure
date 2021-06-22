@@ -46,6 +46,7 @@ export default function EditProfile({ match }) {
     open: false,
     error: "",
     redirectToProfile: false,
+    about: "",
   });
   const jwt = auth.isAuthenticated();
 
@@ -76,6 +77,7 @@ export default function EditProfile({ match }) {
       name: values.name || undefined,
       email: values.email || undefined,
       password: values.password || undefined,
+      about: values.about || undefined,
     };
 
     update(
@@ -125,6 +127,17 @@ export default function EditProfile({ match }) {
           className={classes.textField}
           value={values.name}
           onChange={handleEvent("name")}
+          margin="normal"
+        />
+        <br />
+        <TextField
+          id="multiple-flexible"
+          label="About"
+          className={classes.textField}
+          multiline
+          rows="2"
+          value={values.about}
+          onChange={handleEvent("about")}
           margin="normal"
         />
         <br />

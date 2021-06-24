@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import auth from "./../auth/auth-helper";
 import { read, update } from "./api-user.js";
 import { Redirect } from "react-router-dom";
+import AddPhotoAlternate from "@material-ui/icons/AddPhotoAlternate";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -47,6 +48,7 @@ export default function EditProfile({ match }) {
     error: "",
     redirectToProfile: false,
     about: "",
+    photo: "",
   });
   const jwt = auth.isAuthenticated();
 
@@ -73,12 +75,12 @@ export default function EditProfile({ match }) {
   }, [match.params.userId]);
 
   const clickSubmit = () => {
-    const user = {
-      name: values.name || undefined,
-      email: values.email || undefined,
-      password: values.password || undefined,
-      about: values.about || undefined,
-    };
+    let userData = new FormData();
+    values.name && userData.append("name", values.name);
+    values.email && userData.append("email", values.email);
+    values.password && userData.append("password", values.password);
+    values.about && userData.append("about", values.about);
+    values.photo && userData.append("photo", values.photo);
 
     update(
       {
@@ -87,7 +89,7 @@ export default function EditProfile({ match }) {
       {
         t: jwt.token,
       },
-      user
+      userData
     ).then((data) => {
       if (data && data.error) {
         setValues({ ...values, error: data.error });
@@ -104,7 +106,9 @@ export default function EditProfile({ match }) {
     switch (event.type) {
       //Handle input event
       case "change":
-        setValues({ ...values, [props]: event.target.value });
+        const value =
+          props === "photo" ? event.target.files[0] : event.target.value;
+        setValues({ ...values, [props]: value });
         break;
       default:
         break;
@@ -121,6 +125,19 @@ export default function EditProfile({ match }) {
         <Typography variant="h6" className={classes.title}>
           Edit Profile
         </Typography>
+        <span>{values.photo ? values.photo.name : ""}</span>
+        <input
+          id="icon-button-file"
+          type="file"
+          accept="image/*"
+          onChange={handleEvent("photo")}
+          style={{ display: "none" }}
+        />
+        <label htmlFor="icon-button-file">
+          <Button variant="contained" color="default" component="span">
+            Upload <AddPhotoAlternate />
+          </Button>
+        </label>
         <TextField
           id="name"
           label="Name"

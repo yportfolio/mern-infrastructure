@@ -1,18 +1,34 @@
-import express from 'express'
-import userCtrl from '../controllers/user.controller'
-import authCtrl from '../controllers/auth.controller'
+import express from "express";
+import userCtrl from "../controllers/user.controller";
+import authCtrl from "../controllers/auth.controller";
 
-const router = express.Router()
+const router = express.Router();
 
-router.route('/api/users')
-  .get(userCtrl.list)
-  .post(userCtrl.create)
+router.route("/api/users").get(userCtrl.list).post(userCtrl.create);
 
-router.route('/api/users/:userId')
+/* 
+A route can has multiple handlers that will be executed one by one
+*/
+router
+  .route("/api/users/:userId")
   .get(authCtrl.requireSignin, userCtrl.read)
   .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
-  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove)
+  .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
 
-router.param('userId', userCtrl.userByID)
+/* 
+If found photo, send it in the response to the request. Otherwise, send default photo instead.
+ */
+router
+  .route("/api/users/photo/:userId")
+  .get(userCtrl.photo, userCtrl.defaultPhoto);
 
-export default router
+/* 
+Send default photo  to the request. 
+ */
+router.route("/api/users/defaultphoto").get(userCtrl.defaultPhoto);
+/* Add userByID callback triggered by the userId parameter.
+Add user data to req.profile 
+*/
+router.param("userId", userCtrl.userByID);
+
+export default router;

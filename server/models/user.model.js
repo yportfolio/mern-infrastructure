@@ -32,6 +32,9 @@ const UserSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  // mongoose.Schema.ObjectId is used to reference other documents
+  following: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
+  followers: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
 });
 
 UserSchema.virtual("password")

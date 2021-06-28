@@ -66,7 +66,12 @@ export default function EditProfile({ match }) {
       if (data && data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, name: data.name, email: data.email });
+        setValues({
+          ...values,
+          name: data.name,
+          email: data.email,
+          about: data.about,
+        });
       }
     });
     return function cleanup() {

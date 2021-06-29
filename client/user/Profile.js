@@ -16,6 +16,7 @@ import auth from "./../auth/auth-helper";
 import { read } from "./api-user.js";
 import { Redirect, Link } from "react-router-dom";
 import FollowProfileButton from "./FollowProfileButton";
+import FollowGrid from "./FollowGrid";
 
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
@@ -148,6 +149,8 @@ export default function Profile({ match }) {
             }
           />
         </ListItem>
+        <FollowGrid people={values.user.following} />
+        <FollowGrid people={values.user.followers} />
       </List>
     </Paper>
   );

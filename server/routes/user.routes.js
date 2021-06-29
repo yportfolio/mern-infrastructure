@@ -40,6 +40,12 @@ router
   );
 
 /* 
+Return the name of users that the current haven't follow
+ */
+router
+  .route("/api/users/findpeople/:userId")
+  .get(authCtrl.requireSignin, userCtrl.findPeople);
+/* 
 A route can has multiple handlers that will be executed one by one
 */
 router

@@ -93,7 +93,6 @@ const follow = async (params, credentials, followId) => {
 };
 
 const unfollow = async (params, credentials, unfollowId) => {
-  console.log("unfollowId", unfollowId);
   try {
     let response = await fetch("/api/users/unfollow/", {
       method: "PUT",
@@ -110,4 +109,22 @@ const unfollow = async (params, credentials, unfollowId) => {
   }
 };
 
-export { create, list, read, update, remove, follow, unfollow };
+const findPeople = async (params, credentials, signal) => {
+  try {
+    let response = await fetch("/api/users/findpeople/" + params.userId, {
+      method: "GET",
+      signal: signal,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+
+    return await response.json();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { create, list, read, update, remove, follow, unfollow, findPeople };

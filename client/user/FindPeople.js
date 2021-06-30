@@ -73,6 +73,33 @@ const FindPeople = () => {
     };
   }, []);
 
+  const clickFollow = (user, index) => {
+    follow(
+      {
+        userId: jwt.user._id,
+      },
+      { t: jwt.token },
+      user._id
+    ).then((data) => {
+      if (data && data.error) {
+        console.log(data.error);
+      } else {
+        let toFollow = values.users;
+        toFollow.splice(index, 1);
+        setValues({
+          ...values,
+          users: toFollow,
+          open: true,
+          followMessage: `Following ${user.name}!`,
+        });
+      }
+    });
+  };
+
+  const handleRequestClose = () => {
+    setValues({ ...values, open: false });
+  };
+
   return (
     <div>
       <Paper className={classes.root}>
@@ -80,7 +107,7 @@ const FindPeople = () => {
           Who to follow
         </Typography>
         <List>
-          {values.users.map((item) => (
+          {values.users.map((item, index) => (
             <span key={item._id}>
               <ListItem>
                 <ListItemAvatar className={classes.avatar}>
@@ -101,7 +128,9 @@ const FindPeople = () => {
                     aria-label="Follow"
                     variant="contained"
                     color="primary"
-                    onClick={() => {}}
+                    onClick={() => {
+                      clickFollow(item, index);
+                    }}
                   >
                     Follow
                   </Button>
@@ -111,6 +140,20 @@ const FindPeople = () => {
           ))}
         </List>
       </Paper>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        open={values.open}
+        onClose={() => {
+          handleRequestClose();
+        }}
+        autoHideDuration={5000}
+        message={
+          <span className={classes.snack}> {values.followMessage} </span>
+        }
+      />
     </div>
   );
 };

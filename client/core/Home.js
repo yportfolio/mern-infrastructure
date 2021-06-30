@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import unicornbikeImg from "./../assets/images/unicornbike.jpg";
 import FindPeople from "../user/FindPeople";
 import Grid from "@material-ui/core/Grid";
+import auth from "../auth/auth-helper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+const signin = auth.isAuthenticated();
 
 export default function Home() {
   const classes = useStyles();
@@ -74,11 +77,13 @@ export default function Home() {
           </Typography>
         </CardContent>
       </Card>
-      <Grid container space={8}>
-        <Grid item xs={6} sm={5}>
-          <FindPeople />
+      {signin && (
+        <Grid container space={8}>
+          <Grid item xs={6} sm={5}>
+            <FindPeople />
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </div>
   );
 }

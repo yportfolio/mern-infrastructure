@@ -19,6 +19,7 @@ const signin = async (req, res) => {
       });
     }
 
+    // Coded the payload (_id) into a JWT
     const token = jwt.sign(
       {
         _id: user._id,
@@ -52,6 +53,10 @@ const signout = (req, res) => {
   });
 };
 
+/* 
+If the token is valid, it appends the verified user's ID in an 'auth' key to the request object”
+The user's id is decoded token info that coded in sign in process
+ */
 const requireSignin = expressJwt({
   secret: config.jwtSecret,
   userProperty: "auth",

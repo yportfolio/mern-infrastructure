@@ -58,30 +58,27 @@ const photo = (req, res, next) => {
 const postByID = async (req, res, next, id) => {
   try {
     let post = await Post.findById(id).populate("postedBy", "_id name").exec();
-    if (!post) {
+    if (!post)
       return res.status("400").json({
         error: "Post not found",
       });
-    }
-
     req.post = post;
     next();
-  } catch (error) {
+  } catch (err) {
     return res.status("400").json({
-      error: "Could not retrieve the post",
+      error: "Could not retrieve use post",
     });
   }
 };
 
 const remove = async (req, res) => {
-  console.log("object");
   let post = req.post;
   try {
-    let deletePost = await post.remove();
-    res.json(deletePost);
-  } catch (error) {
+    let deletedPost = await post.remove();
+    res.json(deletedPost);
+  } catch (err) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(error),
+      error: errorHandler.getErrorMessage(err),
     });
   }
 };
@@ -121,7 +118,7 @@ const unlike = async (req, res) => {
 };
 
 const isPoster = (req, res, next) => {
-  let isPoster = req.post && req.auth && req.post.postedBy._id === req.auth._id;
+  let isPoster = req.post && req.auth && req.post.postedBy._id == req.auth._id;
   if (!isPoster) {
     return res.status("403").json({
       error: "User is not authorized",

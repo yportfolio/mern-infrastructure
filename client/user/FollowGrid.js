@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const FollowGrid = (props) => {
   const classes = useStyles();
   return (
-    <div className={root}>
+    <div className={classes.root}>
       <GridList className={classes.gridList} cellHeight={160} cols={4}>
         {props.people.map((person) => (
           <GridListTile className={classes.gridListTile} key={person._id}>

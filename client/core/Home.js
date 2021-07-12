@@ -8,6 +8,7 @@ import unicornbikeImg from "./../assets/images/unicornbike.jpg";
 import FindPeople from "../user/FindPeople";
 import Grid from "@material-ui/core/Grid";
 import auth from "../auth/auth-helper";
+import Newsfeed from "../post/Newsfeed";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,7 @@ export default function Home() {
           <Grid item xs={6} sm={5}>
             <FindPeople />
           </Grid>
+          <Newsfeed />
         </Grid>
       )}
     </div>

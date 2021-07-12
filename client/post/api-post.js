@@ -95,14 +95,15 @@ const like = async (params, credentials, postId) => {
       method: "PUT",
       headers: {
         Accept: "applications/json",
-        "Content-Type": "application/jso",
+        "Content-Type": "application/json",
         Authorization: "Bearer " + credentials.t,
       },
       body: JSON.stringify({ userId: params.userId, postId: postId }),
     });
-
     return await response.json();
-  } catch (error) {}
+  } catch (error) {
+    console.log(err);
+  }
 };
 
 const unlike = async (params, credentials, postId) => {
@@ -111,14 +112,16 @@ const unlike = async (params, credentials, postId) => {
       method: "PUT",
       headers: {
         Accept: "applications/json",
-        "Content-Type": "application/jso",
+        "Content-Type": "application/json",
         Authorization: "Bearer " + credentials.t,
       },
       body: JSON.stringify({ userId: params.userId, postId: postId }),
     });
 
     return await response.json();
-  } catch (error) {}
+  } catch (error) {
+    console.log(err);
+  }
 };
 
 export { listNewsFeed, create, remove, comment, uncomment, like, unlike };

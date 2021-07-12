@@ -87,13 +87,11 @@ const like = async (req, res) => {
   try {
     let result = await Post.findByIdAndUpdate(
       req.body.postId,
-      {
-        $push: { likes: req.body.userId },
-      },
+      { $push: { likes: req.body.userId } },
       { new: true }
     );
     res.json(result);
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
     });

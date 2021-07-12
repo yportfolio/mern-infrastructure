@@ -75,7 +75,13 @@ function Post(props) {
         t: jwt.token,
       },
       props.post._id
-    );
+    ).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setValues({ ...values, like: !values.like, likes: data.likes.length });
+      }
+    });
   };
 
   const deletePost = () => {
@@ -153,6 +159,7 @@ function Post(props) {
               <FavoriteBorderIcon />
             </IconButton>
           )}
+          <span> {values.likes} </span>
         </CardActions>
 
         <Comments

@@ -66,7 +66,14 @@ function Comments(props) {
         },
         props.postId,
         { text: text }
-      );
+      ).then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setText("");
+          props.updateComments(data.comments);
+        }
+      });
     }
   };
 
@@ -89,7 +96,21 @@ function Comments(props) {
     });
   };
 
-  const commentBody = (item) => {};
+  const commentBody = (item) => (
+    <p className={classes.commentText}>
+      <Link to={"/user/" + item.postedBy._id}>{item.postedBy.name} </Link>
+      <br />
+      {item.text}
+      <span className={classes.commentText}>
+        {new Date(item.created).toDateString()} |
+        {auth.isAuthenticated().user._id === item.postedBy._id && (
+          <Icon onClick={deleteComment(item)} className={classes.commentDelete}>
+            delete
+          </Icon>
+        )}
+      </span>
+    </p>
+  );
 
   return (
     <div>

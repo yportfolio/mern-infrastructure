@@ -160,8 +160,17 @@ function Post(props) {
             </IconButton>
           )}
           <span> {values.likes} </span>
-        </CardActions>
 
+          <IconButton
+            className={classes.button}
+            aria-label="Comment"
+            color="secondary"
+          >
+            <CommentIcon />
+          </IconButton>
+          <span> {values.comments.length} </span>
+        </CardActions>
+        <Divider />
         <Comments
           postId={props.post._id}
           comments={values.comments}

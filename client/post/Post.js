@@ -36,14 +36,10 @@ const useStyles = makeStyles((theme) => ({
   text: {
     margin: theme.spacing(2),
   },
-  pictureFrame: {
+  photo: {
     textAlign: "center",
     backgroundColor: "#f2f5f4",
     padding: theme.spacing(1),
-  },
-  picture: {
-    maxWidth: "100%",
-    maxHeight: "100%",
   },
   media: {
     height: 200,
@@ -53,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//TODO Fixing posting a new post which keeping the old post's likes and comments.
+//After reload the page, the problem will go away.
+//Data from the server is perfect. The client's problem.
 function Post(props) {
   const classes = useStyles();
   const jwt = auth.isAuthenticated();
@@ -110,85 +109,83 @@ function Post(props) {
   };
 
   return (
-    <div>
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar src={"/api/users/photo/" + props.post.postedBy._id} />
-          }
-          action={
-            props.post.postedBy._id === auth.isAuthenticated().user._id && (
-              <IconButton onClick={deletePost}>
-                <DeleteIcon />
-              </IconButton>
-            )
-          }
-          title={
-            <Link to={"/user/" + props.post.postedBy._id}>
-              {props.post.postedBy.name}
-            </Link>
-          }
-          subheader={new Date(props.post.created).toDateString()}
-          className={classes.cardHeader}
-        />
-
-        <CardContent className={classes.cardContent}>
-          <Typography component="p" className={classes.text}>
-            {props.post.text}
-          </Typography>
-          {props.post.photo && (
-            <div className={classes.pictureFrame}>
-              <img
-                className={classes.picture}
-                src={"/api/posts/photo/" + props.post._id}
-                alt="photo"
-              />
-            </div>
-          )}
-        </CardContent>
-
-        <CardActions>
-          {values.like ? (
-            <IconButton
-              onClick={clickLike}
-              className={classes.button}
-              aria-label="Like"
-              color="secondary"
-            >
-              <FavoriteIcon />
+    <Card className={classes.card}>
+      <CardHeader
+        avatar={<Avatar src={"/api/users/photo/" + props.post.postedBy._id} />}
+        action={
+          props.post.postedBy._id === auth.isAuthenticated().user._id && (
+            <IconButton onClick={deletePost}>
+              <DeleteIcon />
             </IconButton>
-          ) : (
-            <IconButton
-              onClick={clickLike}
-              className={classes.button}
-              aria-label="Like"
-              color="secondary"
-            >
-              <FavoriteBorderIcon />
-            </IconButton>
-          )}
-          <span> {values.likes} </span>
+          )
+        }
+        title={
+          <Link to={"/user/" + props.post.postedBy._id}>
+            {props.post.postedBy.name}
+          </Link>
+        }
+        subheader={new Date(props.post.created).toDateString()}
+        className={classes.cardHeader}
+      />
 
+      <CardContent className={classes.cardContent}>
+        <Typography component="p" className={classes.text}>
+          {props.post.text}
+        </Typography>
+        {props.post.photo && (
+          <div className={classes.photo}>
+            <img
+              className={classes.media}
+              src={"/api/posts/photo/" + props.post._id}
+            />
+          </div>
+        )}
+      </CardContent>
+
+      <CardActions>
+        {values.like ? (
           <IconButton
+            onClick={clickLike}
             className={classes.button}
-            aria-label="Comment"
+            aria-label="Like"
             color="secondary"
           >
-            <CommentIcon />
+            <FavoriteIcon />
           </IconButton>
-          <span> {values.comments.length} </span>
-        </CardActions>
-        <Divider />
-        <Comments
-          postId={props.post._id}
-          comments={values.comments}
-          updateComments={updateComments}
-        />
-      </Card>
-    </div>
+        ) : (
+          <IconButton
+            onClick={clickLike}
+            className={classes.button}
+            aria-label="Like"
+            color="secondary"
+          >
+            <FavoriteBorderIcon />
+          </IconButton>
+        )}
+        <span> {values.likes} </span>
+
+        <IconButton
+          className={classes.button}
+          aria-label="Comment"
+          color="secondary"
+        >
+          <CommentIcon />
+        </IconButton>
+        <span> {values.comments.length} </span>
+      </CardActions>
+      <Divider />
+      <Comments
+        postId={props.post._id}
+        comments={values.comments}
+        updateComments={updateComments}
+      />
+    </Card>
   );
 }
 
-Post.propTypes = {};
+Post.propTypes = {
+  post: PropTypes.object.isRequired,
+  onRemove: PropTypes.func.isRequired,
+};
 
 export default Post;

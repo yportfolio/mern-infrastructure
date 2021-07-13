@@ -148,7 +148,7 @@ export default function EditProfile({ match }) {
             Upload
             <FileUpload />
           </Button>
-        </label>{" "}
+        </label>
         <span className={classes.filename}>
           {values.photo ? values.photo.name : ""}
         </span>

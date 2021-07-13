@@ -61,46 +61,50 @@ export default function Home({ history }) {
   return (
     <div className={classes.root}>
       {!defaultPage && (
-        <Card className={classes.card}>
-          <Typography variant="h6" className={classes.title}>
-            Home Page
-          </Typography>
-          <CardMedia
-            className={classes.media}
-            image={unicornbikeImg}
-            title="Unicorn Bicycle"
-          />
-          <Typography
-            variant="body2"
-            component="p"
-            className={classes.credit}
-            color="textSecondary"
-          >
-            Photo by
-            <a
-              href="https://unsplash.com/@boudewijn_huysmans"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Boudewijn Huysmans
-            </a>
-            on Unsplash
-          </Typography>
-          <CardContent>
-            <Typography variant="body1" component="p">
-              Welcome to the MERN Infra home page.
-            </Typography>
-          </CardContent>
-        </Card>
+        <Grid container spacing={8}>
+          <Grid item xs={12}>
+            <Card className={classes.card}>
+              <Typography variant="h6" className={classes.title}>
+                Home Page
+              </Typography>
+              <CardMedia
+                className={classes.media}
+                image={unicornbikeImg}
+                title="Unicorn Bicycle"
+              />
+              <Typography
+                variant="body2"
+                component="p"
+                className={classes.credit}
+                color="textSecondary"
+              >
+                Photo by
+                <a
+                  href="https://unsplash.com/@boudewijn_huysmans"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Boudewijn Huysmans
+                </a>
+                on Unsplash
+              </Typography>
+              <CardContent>
+                <Typography variant="body1" component="p">
+                  Welcome to the MERN Infra home page.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       )}
 
       {defaultPage && (
-        <Grid container space={8}>
+        <Grid container spacing={8}>
           <Grid item xs={8} sm={7}>
-            <FindPeople />
+            <Newsfeed />
           </Grid>
           <Grid item xs={6} sm={5}>
-            <Newsfeed />
+            <FindPeople />
           </Grid>
         </Grid>
       )}

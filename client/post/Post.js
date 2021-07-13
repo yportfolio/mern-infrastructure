@@ -36,10 +36,14 @@ const useStyles = makeStyles((theme) => ({
   text: {
     margin: theme.spacing(2),
   },
-  photo: {
+  pictureFrame: {
     textAlign: "center",
     backgroundColor: "#f2f5f4",
     padding: theme.spacing(1),
+  },
+  picture: {
+    maxWidth: "100%",
+    maxHeight: "100%",
   },
   media: {
     height: 200,
@@ -133,8 +137,12 @@ function Post(props) {
             {props.post.text}
           </Typography>
           {props.post.photo && (
-            <div className={classes.photo}>
-              <img src={"/api/posts/photo/" + props.post._id} alt="photo" />
+            <div className={classes.pictureFrame}>
+              <img
+                className={classes.picture}
+                src={"/api/posts/photo/" + props.post._id}
+                alt="photo"
+              />
             </div>
           )}
         </CardContent>

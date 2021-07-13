@@ -166,6 +166,21 @@ const uncomment = async (req, res) => {
   }
 };
 
+const listByUser = async (req, res) => {
+  try {
+    let posts = await Post.find({ postedBy: req.profile._id })
+      .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
+      .sort("-created")
+      .exec();
+    res.json(posts);
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+
 export default {
   listNewsFeed,
   create,
@@ -177,4 +192,5 @@ export default {
   isPoster,
   comment,
   uncomment,
+  listByUser,
 };

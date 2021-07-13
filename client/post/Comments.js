@@ -54,6 +54,11 @@ function Comments(props) {
     }
   };
 
+  /**
+   *
+   * @param {*} event
+   * Press "enter" to confirm adding a comment
+   */
   const addComment = (event) => {
     if (event.keyCode === 13 && event.target.value) {
       event.preventDefault();

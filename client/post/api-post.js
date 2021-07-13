@@ -15,6 +15,22 @@ const listNewsFeed = async (params, credentials, signal) => {
   }
 };
 
+const listByUser = async (params, credentials) => {
+  try {
+    let response = await fetch("/api/posts/by/" + params.userId, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + credentials.t,
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const create = async (params, credentials, post) => {
   try {
     let response = await fetch("/api/posts/new/" + params.userId, {
@@ -124,4 +140,13 @@ const unlike = async (params, credentials, postId) => {
   }
 };
 
-export { listNewsFeed, create, remove, comment, uncomment, like, unlike };
+export {
+  listNewsFeed,
+  listByUser,
+  create,
+  remove,
+  comment,
+  uncomment,
+  like,
+  unlike,
+};

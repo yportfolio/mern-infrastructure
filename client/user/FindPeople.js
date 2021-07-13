@@ -102,7 +102,7 @@ const FindPeople = () => {
 
   return (
     <div>
-      <Paper className={classes.root}>
+      <Paper className={classes.root} elevation={4}>
         <Typography type="title" className={classes.title}>
           Who to follow
         </Typography>
@@ -140,6 +140,7 @@ const FindPeople = () => {
           ))}
         </List>
       </Paper>
+
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

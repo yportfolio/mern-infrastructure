@@ -1,11 +1,11 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
-import Link from "@material-ui/core/Avatar";
-import Avatar from "@material-ui/core/Avatar";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,10 +28,6 @@ const useStyles = makeStyles((theme) => ({
   tileText: {
     textAlign: "center",
     marginTop: 10,
-  },
-
-  gridListTile: {
-    height: 120,
   },
 }));
 

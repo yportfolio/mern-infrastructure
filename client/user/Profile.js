@@ -15,8 +15,9 @@ import DeleteUser from "./DeleteUser";
 import auth from "./../auth/auth-helper";
 import { read } from "./api-user.js";
 import { Redirect, Link } from "react-router-dom";
-import FollowProfileButton from "./FollowProfileButton";
-import FollowGrid from "./FollowGrid";
+import FollowProfileButton from "./../user/FollowProfileButton";
+import ProfileTabs from "./../user/ProfileTabs";
+import { listByUser } from "./../post/api-post.js";
 
 const useStyles = makeStyles((theme) => ({
   root: theme.mixins.gutters({
@@ -26,8 +27,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
   }),
   title: {
-    marginTop: theme.spacing(3),
+    margin: `${theme.spacing(2)}px ${theme.spacing(1)}px 0`,
     color: theme.palette.protectedTitle,
+    fontSize: "1em",
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
+    margin: 10,
   },
 }));
 
@@ -38,6 +45,7 @@ export default function Profile({ match }) {
     redirectToSignin: false,
     following: false,
   });
+  const [posts, setPosts] = useState([]);
   const jwt = auth.isAuthenticated();
 
   /* 
@@ -61,6 +69,7 @@ export default function Profile({ match }) {
       } else {
         const following = checkFollow(data);
         setValues({ ...values, user: data, following: following });
+        loadPosts(data._id);
       }
     });
 
@@ -99,6 +108,28 @@ export default function Profile({ match }) {
         setValues({ ...values, user: data, following: !values.following });
       }
     });
+  };
+
+  const loadPosts = (user) => {
+    listByUser(
+      {
+        userId: user,
+      },
+      { t: jwt.token }
+    ).then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        setPosts(data);
+      }
+    });
+  };
+
+  const removePost = (post) => {
+    const updatedPosts = posts;
+    const index = updatedPosts.indexOf(post);
+    updatedPosts.splice(index, 1);
+    setPosts(updatedPosts);
   };
 
   const photoUrl = values.user._id
@@ -141,6 +172,7 @@ export default function Profile({ match }) {
           )}
         </ListItem>
         <Divider />
+
         <ListItem>
           <ListItemText
             primary={values.user.about}
@@ -149,9 +181,13 @@ export default function Profile({ match }) {
             }
           />
         </ListItem>
-        <FollowGrid people={values.user.following} />
-        <FollowGrid people={values.user.followers} />
       </List>
+
+      <ProfileTabs
+        user={values.user}
+        posts={posts}
+        removePostUpdate={removePost}
+      />
     </Paper>
   );
 }
